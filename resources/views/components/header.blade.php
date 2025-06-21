@@ -24,10 +24,6 @@
             </div>
         </div>
         <div class="flex items-center space-x-4">
-            <button class="p-2 rounded-full hover:bg-gray-100 relative">
-                <i class="far fa-bell text-gray-600"></i>
-                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white">
                     {{ substr(auth()->user()->name, 0, 1) }}

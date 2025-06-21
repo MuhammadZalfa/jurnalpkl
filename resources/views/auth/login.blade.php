@@ -35,13 +35,14 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <!-- Email -->
+                <!-- Nomor Induk/Nomor Pokok -->
                 <div class="mb-6">
-                    <label class="block text-gray-700 mb-2 font-medium" for="email">
-                        <i class="fas fa-envelope mr-2 text-blue-500"></i>Email
+                    <label class="block text-gray-700 mb-2 font-medium" for="nl">
+                        <i class="fas fa-id-card mr-2 text-blue-500"></i>Nomor Induk
                     </label>
-                    <input id="email" type="email" name="email" required autofocus
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input id="ni" type="text" name="ni" required autofocus
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Masukkan nomor induk/nomor pokok">
                 </div>
 
                 <!-- Password -->
@@ -50,7 +51,8 @@
                         <i class="fas fa-lock mr-2 text-blue-500"></i>Password
                     </label>
                     <input id="password" type="password" name="password" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Masukkan password">
                 </div>
 
                 <!-- Remember Me -->

@@ -19,24 +19,32 @@
     </div>
 
     <nav class="py-4">
-        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 bg-blue-700 border-l-4 border-white">
+        @php
+            $currentRoute = request()->route()->getName();
+        @endphp
+
+        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.dashboard' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
             <i class="fas fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
-        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 hover:bg-blue-700">
+        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.students' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
             <i class="fas fa-users"></i>
             <span>Manajemen Siswa</span>
         </a>
-        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 hover:bg-blue-700">
+        <a href="{{ route('admin.jurnal') }}" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.jurnal' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
             <i class="fas fa-book"></i>
             <span>Verifikasi Jurnal</span>
             <span class="ml-auto bg-yellow-500 text-xs px-2 py-1 rounded-full">8</span>
         </a>
-        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 hover:bg-blue-700">
+        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.reports' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
             <i class="fas fa-chart-bar"></i>
             <span>Laporan & Statistik</span>
         </a>
-        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 hover:bg-blue-700">
+        <a href="{{ route('admin.assesment') }}" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.assesment' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
+            <i class="fas fa-puzzle-piece"></i>
+            <span>Assesment</span>
+        </a>
+        <a href="#" class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'admin.settings' ? 'bg-blue-700 border-l-4 border-white' : 'hover:bg-blue-700' }}">
             <i class="fas fa-cog"></i>
             <span>Pengaturan</span>
         </a>
@@ -49,3 +57,4 @@
         </form>
     </nav>
 </div>
+

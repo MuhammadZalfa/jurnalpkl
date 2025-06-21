@@ -12,10 +12,15 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'email',
+        'ni',
         'password',
+        'jurusan',
+        'dudi',
+        'pembimbing',
         'role',
-        'jurusan' // Tambahkan ini
+        'status',
+        'last_login_at',
+        'last_login_ip'
     ];
 
     protected $hidden = [
@@ -23,11 +28,27 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
+    protected $casts = [
+        'password' => 'hashed',
+        'last_login_at' => 'datetime'
+    ];
+
+    // Relasi dengan assessments
+    public function assessments()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Assessment::class, 'student_id');
+    }
+
+
+    // Scope untuk DUDI
+    public function scopeDudi($query, $dudiName)
+    {
+        return $query->where('dudi', $dudiName);
+    }
+
+    // Cek apakah user adalah pembimbing
+    public function isPembimbing()
+    {
+        return $this->role === 'instructor' || $this->role === 'admin';
     }
 }

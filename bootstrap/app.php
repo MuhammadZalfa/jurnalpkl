@@ -11,10 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Tambahkan middleware di sini
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'siswa' => \App\Http\Middleware\SiswaMiddleware::class,
+            'instructor' => \App\Http\Middleware\InstructorMiddleware::class,
+            'activity' => \App\Http\Middleware\LogLastUserActivity::class,
+        ]);
+        
+        $middleware->web(append: [
+            \App\Http\Middleware\LogLastUserActivity::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

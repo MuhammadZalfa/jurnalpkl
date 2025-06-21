@@ -16,9 +16,8 @@
                         <p class="text-blue-100 text-sm mt-1">Isi detail kegiatan harian Anda selama PKL</p>
                     </div>
                     
-                    <form action="#" method="POST" class="p-6" enctype="multipart/form-data">
+                    <form action="{{ route('siswa.jurnal.store') }}" method="POST" class="p-6" enctype="multipart/form-data">
                         @csrf
-                        
                         <!-- Grid Dua Kolom untuk Tanggal dan Hari Ke- -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Tanggal -->
@@ -26,11 +25,8 @@
                                 <label for="date" class="block text-gray-700 font-medium">Tanggal Kegiatan</label>
                                 <div class="relative">
                                     <input type="date" id="date" name="date" 
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
-                                           required>
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <i class="far fa-calendar text-gray-400"></i>
-                                    </div>
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        required>
                                 </div>
                             </div>
                             
@@ -39,23 +35,30 @@
                                 <label for="day_number" class="block text-gray-700 font-medium">Hari Ke-</label>
                                 <div class="relative">
                                     <input type="number" id="day_number" name="day_number" min="1"
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
-                                           placeholder="Contoh: 15" required>
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <i class="fas fa-hashtag text-gray-400"></i>
-                                    </div>
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        placeholder="Contoh: 15" required>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Kegiatan -->
+                        <!-- Nama Pekerjaan -->
+                        <div class="mb-6">
+                            <label for="job_name" class="block text-gray-700 font-medium mb-2">Nama Pekerjaan</label>
+                            <div class="relative">
+                                <input type="text" id="job_name" name="job_name"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                    required>
+                            </div>
+                        </div>
+                        
+                        <!-- Kegiatan Harian -->
                         <div class="mb-6">
                             <label for="activity" class="block text-gray-700 font-medium mb-2">Kegiatan Harian</label>
                             <div class="relative">
                                 <textarea id="activity" name="activity" rows="6"
-                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
-                                          placeholder="Deskripsikan secara detail kegiatan yang Anda lakukan hari ini..."
-                                          required></textarea>
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                        placeholder="Deskripsikan secara detail kegiatan yang Anda lakukan hari ini..."
+                                        required></textarea>
                                 <div class="absolute bottom-3 right-3 text-gray-400 text-sm">
                                     <span id="activity-counter">0</span>/500 kata
                                 </div>
@@ -66,8 +69,8 @@
                         <div class="mb-6">
                             <label for="obstacle" class="block text-gray-700 font-medium mb-2">Kendala & Solusi</label>
                             <textarea id="obstacle" name="obstacle" rows="4"
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
-                                      placeholder="Deskripsikan kendala yang dihadapi dan solusi yang Anda terapkan (jika ada)"></textarea>
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                                    placeholder="Deskripsikan kendala yang dihadapi dan solusi yang Anda terapkan (jika ada)"></textarea>
                         </div>
                         
                         <!-- Upload Foto Dokumentasi -->
@@ -80,7 +83,7 @@
                                         <p class="text-gray-600">Seret & lepas foto disini atau klik untuk memilih</p>
                                         <p class="text-sm text-gray-500">Format: JPG, PNG (Maks. 5MB)</p>
                                         <input type="file" id="documentation" name="documentation[]" multiple 
-                                               class="hidden" accept="image/*">
+                                            class="hidden" accept="image/*">
                                         <button type="button" onclick="document.getElementById('documentation').click()" 
                                                 class="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition duration-300">
                                             Pilih File
@@ -96,7 +99,7 @@
                         <!-- Tombol Aksi -->
                         <div class="flex flex-col md:flex-row justify-end space-y-3 md:space-y-0 md:space-x-4">
                             <a href="{{ route('siswa.dashboard') }}" 
-                               class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300 flex items-center justify-center">
+                            class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300 flex items-center justify-center">
                                 <i class="fas fa-times mr-2"></i> Batal
                             </a>
                             <button type="submit" 

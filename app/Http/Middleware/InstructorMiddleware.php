@@ -6,18 +6,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SiswaMiddleware
+class InstructorMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check()) {
-            return redirect()->route('login');
-        }
-        
-        if(auth()->user()->role !== 'student') {
+        if (auth()->user()->role !== 'instructor') {
             abort(403, 'Unauthorized action.');
         }
-        
         return $next($request);
     }
 }

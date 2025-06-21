@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('jurusan', 50)
-                  ->after('role') // Letakkan setelah kolom role
-                  ->nullable(); // Bisa kosong
+            $table->string('status')->default('active');
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('jurusan');
+            $table->dropColumn(['status', 'last_login_at', 'last_login_ip']);
         });
     }
 };

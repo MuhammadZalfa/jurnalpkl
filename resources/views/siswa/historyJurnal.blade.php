@@ -17,30 +17,31 @@
             
             <!-- Filter Section -->
             <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">Semua Status</option>
-                            <option value="approved">Disetujui</option>
-                            <option value="pending">Menunggu</option>
-                            <option value="rejected">Ditolak</option>
-                        </select>
+                <form action="{{ route('siswa.riwayat') }}" method="GET">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select name="status" class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">Semua Status</option>
+                                <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Disetujui</option>
+                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
+                            <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
+                            <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
-                        <input type="date" class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
+                    <div class="flex justify-end mt-4">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                            <i class="fas fa-filter mr-2"></i> Filter
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
-                        <input type="date" class="w-full border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-                        <i class="fas fa-filter mr-2"></i> Filter
-                    </button>
-                </div>
+                </form>
             </div>
             
             <!-- Journals List -->
@@ -57,82 +58,100 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- Approved Journal -->
+                            @forelse($journals as $journal)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">15</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12 Juni 2025</td>
-                                <td class="px-6 py-4 text-sm text-gray-500">Melakukan pembuatan modul aplikasi dengan Laravel dan Tailwind CSS...</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $journal->day_number }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($journal->date)->format('d F Y') }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">{{ Str::limit($journal->activity, 70) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Disetujui</span>
+                                    @if($journal->status == 'approved')
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Disetujui</span>
+                                    @elseif($journal->status == 'pending')
+                                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">Menunggu</span>
+                                    @else
+                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Ditolak</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('siswa.jurnal.view', 1) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fas fa-print"></i></a>
+                                    @if($journal->status != 'approved')
+                                        <a href="{{ route('siswa.jurnal.edit', $journal->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
+                                    @endif
+                                    <form action="{{ route('siswa.jurnal.delete', $journal->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Apakah Anda yakin ingin menghapus jurnal ini?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                            
-                            <!-- Pending Journal -->
+                            @empty
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">14</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11 Juni 2025</td>
-                                <td class="px-6 py-4 text-sm text-gray-500">Mempelajari konsep middleware dan autentikasi role-based...</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">Menunggu</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('siswa.jurnal.view', 2) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('siswa.jurnal.edit', 2) }}" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
+                                <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    Tidak ada jurnal ditemukan
                                 </td>
                             </tr>
-                            
-                            <!-- Rejected Journal -->
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">13</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 Juni 2025</td>
-                                <td class="px-6 py-4 text-sm text-gray-500">Mencoba implementasi CRUD dengan Laravel...</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">Ditolak</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('siswa.jurnal.view', 3) }}" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('siswa.jurnal.edit', 3) }}" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
                 
                 <!-- Pagination -->
+                @if($journals->hasPages())
                 <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
                     <div class="flex-1 flex justify-between sm:hidden">
-                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Sebelumnya</a>
-                        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Selanjutnya</a>
+                        @if($journals->onFirstPage())
+                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-white">Sebelumnya</span>
+                        @else
+                            <a href="{{ $journals->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Sebelumnya</a>
+                        @endif
+                        
+                        @if($journals->hasMorePages())
+                            <a href="{{ $journals->nextPageUrl() }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Selanjutnya</a>
+                        @else
+                            <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-white">Selanjutnya</span>
+                        @endif
                     </div>
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm text-gray-700">
-                                Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">3</span> dari <span class="font-medium">15</span> jurnal
+                                Menampilkan <span class="font-medium">{{ $journals->firstItem() }}</span> sampai <span class="font-medium">{{ $journals->lastItem() }}</span> dari <span class="font-medium">{{ $journals->total() }}</span> jurnal
                             </p>
                         </div>
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                    <span class="sr-only">Sebelumnya</span>
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                                <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</a>
-                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</a>
-                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</a>
-                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                    <span class="sr-only">Selanjutnya</span>
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
+                                @if($journals->onFirstPage())
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-300">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                @else
+                                    <a href="{{ $journals->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                @endif
+                                
+                                @foreach(range(1, $journals->lastPage()) as $page)
+                                    @if($page == $journals->currentPage())
+                                        <span class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $page }}</span>
+                                    @else
+                                        <a href="{{ $journals->url($page) }}" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">{{ $page }}</a>
+                                    @endif
+                                @endforeach
+                                
+                                @if($journals->hasMorePages())
+                                    <a href="{{ $journals->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                @else
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-300">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                @endif
                             </nav>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </main>
     </div>

@@ -41,19 +41,25 @@
             <span>Absen</span>
         </a>
         
+        <a href="{{ route('siswa.assesmen') }}" 
+           class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'siswa.assesmen' ? 'bg-green-700 border-l-4 border-white' : 'hover:bg-green-700' }}">
+            <i class="fas fa-puzzle-piece"></i>
+            <span>Assesmen</span>
+        </a>        
+        
         <a href="{{ route('siswa.riwayat') }}" 
            class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'siswa.riwayat' ? 'bg-green-700 border-l-4 border-white' : 'hover:bg-green-700' }}">
             <i class="fas fa-history"></i>
             <span>Riwayat Jurnal</span>
         </a>
         
-        <a href="#" 
+        <a href="{{ route('siswa.statistik') }}" 
            class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'siswa.statistik' ? 'bg-green-700 border-l-4 border-white' : 'hover:bg-green-700' }}">
             <i class="fas fa-chart-line"></i>
             <span>Statistik Saya</span>
         </a>
         
-        <a href="{{ route('profile.edit') }}" 
+        <a href="{{ route('siswa.profil') }}" 
            class="sidebar-item flex items-center space-x-3 py-3 px-6 {{ $currentRoute == 'profile.edit' ? 'bg-green-700 border-l-4 border-white' : 'hover:bg-green-700' }}">
             <i class="fas fa-user-cog"></i>
             <span>Profil Saya</span>
