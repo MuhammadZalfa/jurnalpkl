@@ -18,17 +18,19 @@
                                 <h1 class="text-xl font-semibold">Jurnal Harian PKL</h1>
                                 <div class="flex items-center mt-2">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://via.placeholder.com/40" alt="">
+                                        <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode($journal->user->name) }}&background=random" alt="">
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm font-medium text-blue-100">Andi Wijaya</p>
-                                        <p class="text-xs text-blue-200">XII RPL 1 - PT. Teknologi Maju</p>
+                                        <p class="text-sm font-medium text-blue-100">{{ $journal->user->name }}</p>
+                                        <p class="text-xs text-blue-200">{{ $journal->user->jurusan }} - {{ $journal->user->dudi }}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Menunggu</span>
-                                <p class="text-xs text-blue-200 mt-1">Dikirim: 15 Juni 2023, 18:30 WIB</p>
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $journal->status === 'approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                    {{ $journal->status === 'approved' ? 'Disetujui' : 'Menunggu' }}
+                                </span>
+                                <p class="text-xs text-blue-200 mt-1">Dikirim: {{ $journal->created_at->format('d M Y, H:i') }}</p>
                             </div>
                         </div>
                     </div>
@@ -39,31 +41,26 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="block text-gray-500 text-sm font-medium mb-1">Hari Ke-</label>
-                                <p class="text-gray-800 font-medium">15</p>
+                                <p class="text-gray-800 font-medium">{{ $journal->day_number }}</p>
                             </div>
                             <div>
                                 <label class="block text-gray-500 text-sm font-medium mb-1">Tanggal Kegiatan</label>
-                                <p class="text-gray-800 font-medium">15 Juni 2023</p>
+                                <p class="text-gray-800 font-medium">{{ $journal->date->format('d M Y') }}</p>
                             </div>
                         </div>
                         
                         <!-- Kegiatan -->
                         <div class="mb-6">
-                            <label class="block text-gray-500 text-sm font-medium mb-2">Nama Pekerjaan</label>
+                            <label class="block text-gray-500 text-sm font-medium mb-2">Divisi/Bagian</label>
                             <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                <p class="text-gray-800">Membuat desain UI untuk aplikasi mobile perusahaan</p>
+                                <p class="text-gray-800">{{ $journal->job_name }}</p>
                             </div>
                         </div>
                         
                         <div class="mb-6">
                             <label class="block text-gray-500 text-sm font-medium mb-2">Detail Kegiatan</label>
                             <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                <p class="text-gray-800 whitespace-pre-line">Hari ini saya membuat desain UI untuk aplikasi mobile perusahaan menggunakan Figma. Saya menyelesaikan 3 halaman utama:
-- Halaman Login
-- Halaman Dashboard
-- Halaman Profil Pengguna
-
-Saya juga melakukan diskusi dengan tim UX untuk memastikan desain sesuai dengan kebutuhan pengguna.</p>
+                                <p class="text-gray-800 whitespace-pre-line">{{ $journal->activity }}</p>
                             </div>
                         </div>
                         
@@ -71,66 +68,52 @@ Saya juga melakukan diskusi dengan tim UX untuk memastikan desain sesuai dengan 
                         <div class="mb-6">
                             <label class="block text-gray-500 text-sm font-medium mb-2">Kendala & Solusi</label>
                             <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                <p class="text-gray-800 whitespace-pre-line">Kendala: 
-- Warna yang dipilih terlihat kurang kontras pada perangkat mobile
-- Beberapa komponen tidak konsisten
-
-Solusi:
-- Melakukan penyesuaian warna berdasarkan saran dari mentor
-- Membuat komponen master di Figma untuk menjaga konsistensi</p>
+                                <p class="text-gray-800 whitespace-pre-line">{{ $journal->obstacle }}</p>
                             </div>
                         </div>
                         
                         <!-- Dokumentasi -->
+                        @if($journal->images->count() > 0)
                         <div class="mb-8">
                             <label class="block text-gray-500 text-sm font-medium mb-3">Dokumentasi Kegiatan</label>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                <a href="#" class="group relative block rounded-lg overflow-hidden border border-gray-200">
-                                    <img src="https://via.placeholder.com/300" alt="Dokumentasi 1" class="w-full h-32 object-cover">
+                                @foreach($journal->images as $image)
+                                <a href="{{ $image->image_url }}" target="_blank" class="group relative block rounded-lg overflow-hidden border border-gray-200">
+                                    <img src="{{ $image->image_url }}" alt="Dokumentasi {{ $loop->iteration }}" class="w-full h-32 object-cover">
                                     <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                                         <i class="fas fa-search-plus text-white text-xl"></i>
                                     </div>
                                 </a>
-                                <a href="#" class="group relative block rounded-lg overflow-hidden border border-gray-200">
-                                    <img src="https://via.placeholder.com/300" alt="Dokumentasi 2" class="w-full h-32 object-cover">
-                                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                                        <i class="fas fa-search-plus text-white text-xl"></i>
-                                    </div>
-                                </a>
-                                <a href="#" class="group relative block rounded-lg overflow-hidden border border-gray-200">
-                                    <img src="https://via.placeholder.com/300" alt="Dokumentasi 3" class="w-full h-32 object-cover">
-                                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                                        <i class="fas fa-search-plus text-white text-xl"></i>
-                                    </div>
-                                </a>
+                                @endforeach
                             </div>
                         </div>
+                        @endif
                         
                         <!-- Form Persetujuan -->
+                        @if($journal->status !== 'approved')
                         <div class="border-t border-gray-200 pt-6 mt-6">
-                            <form action="{{ route('admin.jurnal.approve', 1) }}" method="POST">
+                            <form action="{{ route('admin.jurnal.approve', $journal->id) }}" method="POST">
                                 @csrf
-                                <div class="mb-4">
-                                    <label for="status" class="block text-gray-700 font-medium mb-2">Status Persetujuan</label>
-                                    <select id="status" name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm">
-                                        <option value="disetujui">Setujui</option>
-                                        <option value="ditolak">Tolak</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="feedback" class="block text-gray-700 font-medium mb-2">Feedback (Opsional)</label>
-                                    <textarea id="feedback" name="feedback" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm" placeholder="Berikan masukan untuk siswa..."></textarea>
-                                </div>
                                 <div class="flex justify-end space-x-3">
                                     <a href="{{ route('admin.jurnal') }}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300 flex items-center justify-center">
                                         <i class="fas fa-arrow-left mr-2"></i> Kembali
                                     </a>
                                     <button type="submit" class="px-6 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
-                                        <i class="fas fa-check-circle mr-2"></i> Simpan Status
+                                        <i class="fas fa-check-circle mr-2"></i> Setujui Jurnal
                                     </button>
                                 </div>
                             </form>
                         </div>
+                        @else
+                        <div class="border-t border-gray-200 pt-6 mt-6">
+
+                            <div class="flex justify-end">
+                                <a href="{{ route('admin.jurnal') }}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-300 flex items-center justify-center">
+                                    <i class="fas fa-arrow-left mr-2"></i> Kembali
+                                </a>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

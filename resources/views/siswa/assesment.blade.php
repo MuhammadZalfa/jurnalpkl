@@ -21,7 +21,7 @@
                             <div class="p-6 flex flex-col h-full">
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                    <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly1->due_date)->format('d F Y') }}</p>
+                                    <p class="text-gray-600">15 - 30 Juli 2025</p>
                                 </div>
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Status:</p>
@@ -48,7 +48,7 @@
                             <div class="p-6 flex flex-col h-full">
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                    <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly2->due_date)->format('d F Y') }}</p>
+                                    <p class="text-gray-600">15 - 30 September 2025</p>
                                 </div>
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Status:</p>
@@ -75,7 +75,7 @@
                             <div class="p-6 flex flex-col h-full">
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                    <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly3->due_date)->format('d F Y') }}</p>
+                                    <p class="text-gray-600">1 - 15 Desember 2025</p>
                                 </div>
                                 <div class="mb-4">
                                     <p class="font-medium text-gray-700 mb-1">Status:</p>
@@ -109,7 +109,7 @@
                                 <div class="p-6 flex flex-col h-full">
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                        <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly1->due_date)->format('d F Y') }}</p>
+                                        <p class="text-gray-600">15 - 30 Juli 2025</p>
                                     </div>
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Status:</p>
@@ -136,7 +136,7 @@
                                 <div class="p-6 flex flex-col h-full">
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                        <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly2->due_date)->format('d F Y') }}</p>
+                                        <p class="text-gray-600">15 - 30 September 2025</p>
                                     </div>
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Status:</p>
@@ -163,7 +163,7 @@
                                 <div class="p-6 flex flex-col h-full">
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Batas Waktu:</p>
-                                        <p class="text-gray-600">{{ \Carbon\Carbon::parse($monthly3->due_date)->format('d F Y') }}</p>
+                                        <p class="text-gray-600">1 - 15 Desember 2025</p>
                                     </div>
                                     <div class="mb-4">
                                         <p class="font-medium text-gray-700 mb-1">Status:</p>

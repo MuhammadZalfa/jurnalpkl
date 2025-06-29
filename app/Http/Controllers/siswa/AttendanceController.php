@@ -43,9 +43,25 @@ class AttendanceController extends Controller
         if ($todayAttendance) {
             if ($todayAttendance->type === 'masuk' && !$todayAttendance->time_out) {
                 try {
-                    $timeOut = $now->toTimeString();
-                    $timeIn = Carbon::parse($todayAttendance->date . ' ' . $todayAttendance->time_in);
-                    $duration = $now->diffInMinutes($timeIn);
+                    $timeOut = $now->format('H:i:s');
+                    
+                    // PERBAIKAN: Parse tanggal dan waktu dengan benar
+                    // Gunakan toDateString() untuk mendapatkan format Y-m-d saja
+                    $dateString = Carbon::parse($todayAttendance->date)->toDateString();
+                    $timeIn = Carbon::parse($dateString . ' ' . $todayAttendance->time_in, 'Asia/Jakarta');
+                    $timeOutObj = Carbon::parse($dateString . ' ' . $timeOut, 'Asia/Jakarta');
+
+                    // Handle kasus melewati tengah malam
+                    if ($timeOutObj->lessThan($timeIn)) {
+                        $timeOutObj->addDay();
+                    }
+
+                    $duration = $timeIn->diffInMinutes($timeOutObj);
+
+                    // Handle durasi kurang dari 1 menit
+                    if ($duration < 1 && $timeOutObj->diffInSeconds($timeIn) > 0) {
+                        $duration = 0;
+                    }
 
                     $todayAttendance->update([
                         'time_out' => $timeOut,
@@ -64,22 +80,6 @@ class AttendanceController extends Controller
                 ->with('error', 'Anda sudah melakukan absensi hari ini.');
         }
 
-        // Check-in process
-        $validator = Validator::make($request->all(), [
-            'attendance_type' => 'required|in:masuk,sakit,izin',
-            'reason' => 'nullable|min:10|max:500'
-        ], [
-            'attendance_type.required' => 'Silakan pilih jenis absensi',
-            'reason.min' => 'Alasan minimal 10 karakter (jika diisi)'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Terdapat kesalahan dalam pengisian form!');
-        }
-
         try {
             $data = [
                 'student_id' => Auth::id(),
@@ -93,13 +93,13 @@ class AttendanceController extends Controller
             }
 
             if ($request->attendance_type === 'masuk') {
-                $data['time_in'] = $now->toTimeString();
+                $data['time_in'] = $now->format('H:i:s');
             }
 
             Attendance::create($data);
 
             return redirect()->route('siswa.absensi')
-                ->with('success', 'Absensi masuk berhasil disimpan!');
+                ->with('success', 'Absensi berhasil disimpan!');
         } catch (\Exception $e) {
             Log::error('Attendance error: '.$e->getMessage());
             return redirect()->back()

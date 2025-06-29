@@ -25,17 +25,30 @@ class AssessmentController extends Controller
             $instructorId = $student->instructor_id;
         }
 
+        // Get assessments with hardcoded due dates
         $monthly1 = Assessment::where('student_id', $student->id)
                     ->where('type', 'monthly1')
                     ->first();
+        
+        if ($monthly1 && !$monthly1->due_date) {
+            $monthly1->update(['due_date' => '2025-07-30']);
+        }
 
         $monthly2 = Assessment::where('student_id', $student->id)
                     ->where('type', 'monthly2')
                     ->first();
+        
+        if ($monthly2 && !$monthly2->due_date) {
+            $monthly2->update(['due_date' => '2025-09-30']);
+        }
 
         $monthly3 = Assessment::where('student_id', $student->id)
                     ->where('type', 'monthly3')
                     ->first();
+        
+        if ($monthly3 && !$monthly3->due_date) {
+            $monthly3->update(['due_date' => '2025-12-15']);
+        }
         
         return view('siswa.assesment', compact('monthly1', 'monthly2', 'monthly3'));
     }
@@ -47,81 +60,81 @@ class AssessmentController extends Controller
 
         $softSkills = [
             'a. Kehadiran' => [
-                'value' => $monthly1->attendance ?? 'Belum dinilai',
+                'weight' => $monthly1->attendance ?? 0,
                 'description' => $monthly1->attendance_desc ?? '-'
             ],
             'b. Penampilan dan Kerapihan pakaian' => [
-                'value' => $monthly1->appearance ?? 'Belum dinilai',
+                'weight' => $monthly1->appearance ?? 0,
                 'description' => $monthly1->appearance_desc ?? '-'
             ],
             'c. Komitmen dan integritas dalam menjalankan POS' => [
-                'value' => $monthly1->commitment ?? 'Belum dinilai',
+                'weight' => $monthly1->commitment ?? 0,
                 'description' => $monthly1->commitment_desc ?? '-'
             ],
             'd. Sopan Santun' => [
-                'value' => $monthly1->manners ?? 'Belum dinilai',
+                'weight' => $monthly1->manners ?? 0,
                 'description' => $monthly1->manners_desc ?? '-'
             ],
             'e. Inisiatif' => [
-                'value' => $monthly1->initiative ?? 'Belum dinilai',
+                'weight' => $monthly1->initiative ?? 0,
                 'description' => $monthly1->initiative_desc ?? '-'
             ],
             'f. Kerjasama tim' => [
-                'value' => $monthly1->teamwork ?? 'Belum dinilai',
+                'weight' => $monthly1->teamwork ?? 0,
                 'description' => $monthly1->teamwork_desc ?? '-'
             ],
             'g. Disiplin dan Tanggungjawab' => [
-                'value' => $monthly1->discipline ?? 'Belum dinilai',
+                'weight' => $monthly1->discipline ?? 0,
                 'description' => $monthly1->discipline_desc ?? '-'
             ],
             'h. Komunikasi' => [
-                'value' => $monthly1->communication ?? 'Belum dinilai',
+                'weight' => $monthly1->communication ?? 0,
                 'description' => $monthly1->communication_desc ?? '-'
             ],
             'i. Kepedulian terhadap sosial dan lingkungan' => [
-                'value' => $monthly1->social_care ?? 'Belum dinilai',
+                'weight' => $monthly1->social_care ?? 0,
                 'description' => $monthly1->social_care_desc ?? '-'
             ],
             'j. K3LH' => [
-                'value' => $monthly1->k3lh ?? 'Belum dinilai',
+                'weight' => $monthly1->k3lh ?? 0,
                 'description' => $monthly1->k3lh_desc ?? '-'
             ],
         ];
 
         $hardSkills = [
             'a. Keahlian dan keterampilan' => [
-                'value' => $monthly1->expertise ?? 'Belum dinilai',
+                'weight' => $monthly1->expertise ?? 0,
                 'description' => $monthly1->expertise_desc ?? '-'
             ],
             'b. Inovasi dan kreativitas' => [
-                'value' => $monthly1->innovation ?? 'Belum dinilai',
+                'weight' => $monthly1->innovation ?? 0,
                 'description' => $monthly1->innovation_desc ?? '-'
             ],
             'c. Produktivitas dan penyelesaian tugas' => [
-                'value' => $monthly1->productivity ?? 'Belum dinilai',
+                'weight' => $monthly1->productivity ?? 0,
                 'description' => $monthly1->productivity_desc ?? '-'
             ],
             'd. Penguasaan penggunaan alat' => [
-                'value' => $monthly1->tool_mastery ?? 'Belum dinilai',
+                'weight' => $monthly1->tool_mastery ?? 0,
                 'description' => $monthly1->tool_mastery_desc ?? '-'
             ],
         ];
 
         $entrepreneurship = [
             'a. Perencanaan' => [
-                'value' => $monthly1->planning ?? 'Belum dinilai',
+                'weight' => $monthly1->planning ?? 0,
                 'description' => $monthly1->planning_desc ?? '-'
             ],
             'b. Proses' => [
-                'value' => $monthly1->process ?? 'Belum dinilai',
+                'weight' => $monthly1->process ?? 0,
                 'description' => $monthly1->process_desc ?? '-'
             ],
             'c. Hasil' => [
-                'value' => $monthly1->result ?? 'Belum dinilai',
+                'weight' => $monthly1->result ?? 0,
                 'description' => $monthly1->result_desc ?? '-'
             ],
             'd. Nilai Jual' => [
-                'value' => $monthly1->value ?? 'Belum dinilai',
+                'weight' => $monthly1->value ?? 0,
                 'description' => $monthly1->value_desc ?? '-'
             ],
         ];

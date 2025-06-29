@@ -38,11 +38,11 @@
                 <!-- Nomor Induk/Nomor Pokok -->
                 <div class="mb-6">
                     <label class="block text-gray-700 mb-2 font-medium" for="nl">
-                        <i class="fas fa-id-card mr-2 text-blue-500"></i>Nomor Induk
+                        <i class="fas fa-id-card mr-2 text-blue-500"></i>NISN/NIPD/NI
                     </label>
                     <input id="ni" type="text" name="ni" required autofocus
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Masukkan nomor induk/nomor pokok">
+                        placeholder="Masukkan NISN/NIPD/NI Anda">
                 </div>
 
                 <!-- Password -->

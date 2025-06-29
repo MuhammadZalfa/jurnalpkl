@@ -43,7 +43,7 @@
                         
                         <!-- Nama Pekerjaan -->
                         <div class="mb-6">
-                            <label for="job_name" class="block text-gray-700 font-medium mb-2">Nama Pekerjaan</label>
+                            <label for="job_name" class="block text-gray-700 font-medium mb-2">Divisi/Departemen/Bagian</label>
                             <div class="relative">
                                 <input type="text" id="job_name" name="job_name"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
@@ -53,7 +53,7 @@
                         
                         <!-- Kegiatan Harian -->
                         <div class="mb-6">
-                            <label for="activity" class="block text-gray-700 font-medium mb-2">Kegiatan Harian</label>
+                            <label for="activity" class="block text-gray-700 font-medium mb-2">Refleksi Pembelajaran</label>
                             <div class="relative">
                                 <textarea id="activity" name="activity" rows="6"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"

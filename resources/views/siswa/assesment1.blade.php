@@ -24,9 +24,7 @@
                                         <tr class="bg-gray-100">
                                             <th class="border p-2 text-left w-1/5">Element</th>
                                             <th class="border p-2 text-left w-2/5">Tujuan Pembelajaran/Indikator</th>
-                                            <th class="border p-2 text-center w-1/10">Kurang</th>
-                                            <th class="border p-2 text-center w-1/10">Cukup</th>
-                                            <th class="border p-2 text-center w-1/10">Baik</th>
+                                            <th class="border p-2 text-center w-1/5">Bobot</th>
                                             <th class="border p-2 text-left w-1/5">Deskripsi</th>
                                         </tr>
                                     </thead>
@@ -39,21 +37,9 @@
                                         <tr>
                                             <td class="border p-2">{{ $skill }}</td>
                                             <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Kurang')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
+                                                {{ $value['weight'] }}
                                             </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Cukup')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Baik')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2">{{ $value['description'] ?? '-' }}</td>
+                                            <td class="border p-2">{{ $value['description'] }}</td>
                                         </tr>
                                         @endforeach
 
@@ -65,47 +51,9 @@
                                         <tr>
                                             <td class="border p-2">{{ $skill }}</td>
                                             <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Kurang')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
+                                                {{ $value['weight'] }}
                                             </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Cukup')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Baik')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2">{{ $value['description'] ?? '-' }}</td>
-                                        </tr>
-                                        @endforeach
-
-                                        <!-- Section 3 - Entrepreneurship -->
-                                        <tr>
-                                            <td class="border p-2 font-medium" rowspan="5">Penyiapan kemandirian berwirausaha<br>Kemampuan dalam menyelesaikan project</td>
-                                        </tr>
-                                        @foreach($entrepreneurship as $skill => $value)
-                                        <tr>
-                                            <td class="border p-2">{{ $skill }}</td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Kurang')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Cukup')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2 text-center">
-                                                @if($value['value'] === 'Baik')
-                                                    <i class="fas fa-check text-green-500"></i>
-                                                @endif
-                                            </td>
-                                            <td class="border p-2">{{ $value['description'] ?? '-' }}</td>
+                                            <td class="border p-2">{{ $value['description'] }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

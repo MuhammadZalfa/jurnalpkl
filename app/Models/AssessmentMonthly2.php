@@ -1,5 +1,5 @@
 <?php
-// app/Models/AssessmentMonthly2.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,21 +14,25 @@ class AssessmentMonthly2 extends Model
     protected $fillable = [
         'assessment_id',
         // Soft Skills
-        'attendance_weight', 'attendance_desc',
-        'appearance_weight', 'appearance_desc',
-        'commitment_weight', 'commitment_desc',
-        'politeness_weight', 'politeness_desc',
-        'initiative_weight', 'initiative_desc',
-        'teamwork_weight', 'teamwork_desc',
-        'discipline_weight', 'discipline_desc',
-        'communication_weight', 'communication_desc',
-        'social_care_weight', 'social_care_desc',
-        'k3lh_weight', 'k3lh_desc',
+        'attendance', 'attendance_desc',
+        'appearance', 'appearance_desc',
+        'commitment', 'commitment_desc',
+        'manners', 'manners_desc',
+        'initiative', 'initiative_desc',
+        'teamwork', 'teamwork_desc',
+        'discipline', 'discipline_desc',
+        'communication', 'communication_desc',
+        'social_care', 'social_care_desc',
+        'k3lh', 'k3lh_desc',
         // Hard Skills
-        'expertise_weight', 'expertise_desc',
-        'innovation_weight', 'innovation_desc',
-        'productivity_weight', 'productivity_desc',
-        'tool_mastery_weight', 'tool_mastery_desc',
+        'expertise', 'expertise_desc',
+        'innovation', 'innovation_desc',
+        'productivity', 'productivity_desc',
+        'tool_mastery', 'tool_mastery_desc',
+        // Calculated scores
+        'soft_skills_score',
+        'hard_skills_score',
+        'final_score',
         // Feedback
         'dudi_comments', 'pembimbing_comments',
         'dudi_approved', 'pembimbing_approved'
@@ -36,7 +40,24 @@ class AssessmentMonthly2 extends Model
 
     protected $casts = [
         'dudi_approved' => 'boolean',
-        'pembimbing_approved' => 'boolean'
+        'pembimbing_approved' => 'boolean',
+        'attendance' => 'integer',
+        'appearance' => 'integer',
+        'commitment' => 'integer',
+        'manners' => 'integer',
+        'initiative' => 'integer',
+        'teamwork' => 'integer',
+        'discipline' => 'integer',
+        'communication' => 'integer',
+        'social_care' => 'integer',
+        'k3lh' => 'integer',
+        'expertise' => 'integer',
+        'innovation' => 'integer',
+        'productivity' => 'integer',
+        'tool_mastery' => 'integer',
+        'soft_skills_score' => 'float',
+        'hard_skills_score' => 'float',
+        'final_score' => 'float'
     ];
 
     public function assessment()
